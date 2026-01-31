@@ -42,15 +42,13 @@ function Navbar() {
 
         {/* Left */}
           <Link to="/" className="text-xl font-bold text-blue-600">
-          MedConsult
+          Dostiva Consultancy
         </Link>
 
 
         {/* Center */}
         <div className="hidden md:flex gap-6 font-medium text-gray-700">
            <NavLink to="/" className={linkClass}>Home</NavLink>
-          <NavLink to="/services" className={linkClass}>Services</NavLink>
-          <NavLink to="/countries" className={linkClass}>Countries</NavLink>
           <NavLink to="/about" className={linkClass}>About</NavLink>
           <NavLink to="/contact" className={linkClass}>Contact</NavLink>
         </div>
@@ -61,7 +59,7 @@ function Navbar() {
             onClick={() => setModalOpen(true)}
             className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm"
           >
-            Contact Us
+            Reach Us
           </button>
        
         {/* Mobile */}

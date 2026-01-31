@@ -30,15 +30,15 @@ function Footer() {
             <h4 className="text-white font-semibold mb-2">Contact</h4>
 
                <p className="flex items-center gap-2">
-                <FaPhoneAlt /> +91 98765 43210
+                <FaPhoneAlt /> +91 9052926868
               </p>
 
                <p className="flex items-center gap-2">
-                <FaEnvelope /> info@medconsult.com
+                <FaEnvelope /> info@dostiva.com
               </p>
 
               <p className="flex items-center gap-2">
-                  <FaMapMarkerAlt /> New Delhi, India
+                  <FaMapMarkerAlt /> Anakapalli,Andhra Pradesh, India, 531002
               </p>
             </div>
       </div>

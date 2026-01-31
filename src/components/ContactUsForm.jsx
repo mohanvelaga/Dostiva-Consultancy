@@ -2,25 +2,47 @@ import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 export default function ContactUsForm({ isOpen, onClose }) {
-  const [success, setSuccess] = useState(false);
-
+ const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+});
+ 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    fetch("/", {
+  try {
+    const res = await fetch("/.netlify/functions/contact", {
       method: "POST",
-      body: data,
-    })
-      .then(() => {
-        setSuccess(true);
-        form.reset();
-      })
-      .catch(() => alert("Something went wrong"));
-  };
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("✅ Message sent successfully!");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } else {
+      console.error(data);
+      alert("❌ Failed to send message");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("❌ Network error. Please try again.");
+  }
+};
+
 
   return (
     <div
@@ -58,34 +80,38 @@ export default function ContactUsForm({ isOpen, onClose }) {
             <input name="bot-field" />
           </p>
 
-          <input
-            name="name"
-            required
-            placeholder="Full Name"
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+         <input
+  name="name"
+  value={formData.name}
+  onChange={(e) =>
+    setFormData({ ...formData, name: e.target.value })
+  }
+/>
 
-          <input
-            name="email"
-            type="email"
-            required
-            placeholder="Email Address"
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+<input
+  name="email"
+  value={formData.email}
+  onChange={(e) =>
+    setFormData({ ...formData, email: e.target.value })
+  }
+/>
 
-          <input
-            name="phone"
-            placeholder="Phone Number"
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+<input
+  name="phone"
+  value={formData.phone}
+  onChange={(e) =>
+    setFormData({ ...formData, phone: e.target.value })
+  }
+/>
 
-          <textarea
-            name="message"
-            rows="4"
-            required
-            placeholder="Your Message"
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          ></textarea>
+<textarea
+  name="message"
+  value={formData.message}
+  onChange={(e) =>
+    setFormData({ ...formData, message: e.target.value })
+  }
+/>
+
 
           <button
             type="submit"
@@ -94,11 +120,6 @@ export default function ContactUsForm({ isOpen, onClose }) {
             Submit Enquiry
           </button>
 
-          {success && (
-            <p className="text-green-600 text-center font-medium">
-              ✅ Message sent successfully!
-            </p>
-          )}
         </form>
       </div>
     </div>

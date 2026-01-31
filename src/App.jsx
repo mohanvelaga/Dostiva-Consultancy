@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Navbar from "./components/Navbar";
 import ContactUsForm from "./components/ContactUsForm";
 import { Routes, Route } from "react-router-dom"; // ❌ removed BrowserRouter
@@ -7,6 +7,11 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 
 function App() {
+   useEffect(() => {
+  fetch("/.netlify/functions/hello")
+    .then(res => res.json())
+    .then(data => console.log(data));
+}, []);
   const [modalOpen, setModalOpen] = useState(false);
 
   const onContactClick = () => {
